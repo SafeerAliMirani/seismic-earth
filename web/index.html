@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Seismic Earth — live global earthquakes (USGS · WebGPU)</title>
+  <meta name="description" content="A real-time 3D globe of real earthquakes streamed live from the USGS, rendered with WebGPU. Built by Dr. Safeer Ali Mirani." />
+  <meta name="author" content="Dr. Safeer Ali Mirani" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%2305070e' stroke='%23e0b872' stroke-width='1.5'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23ff7a4d'/%3E%3Ccircle cx='16' cy='16' r='7.5' fill='none' stroke='%23ff7a4d' stroke-width='1' opacity='0.55'/%3E%3Ccircle cx='16' cy='16' r='11.5' fill='none' stroke='%23ff7a4d' stroke-width='0.75' opacity='0.3'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="./css/theme.css" />
+</head>
+<body>
+  <canvas id="gpu"></canvas>
+  <div id="labels"></div>
+
+  <header id="hud">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">◉</span>
+      <div>
+        <div class="title">Seismic Earth</div>
+        <div class="subtitle">live USGS earthquakes · WebGPU</div>
+      </div>
+    </div>
+    <dl class="stats">
+      <div><dt>Events</dt><dd id="stat-count">—</dd></div>
+      <div><dt>Date</dt><dd id="stat-date">—</dd></div>
+      <div><dt>FPS</dt><dd id="stat-fps">—</dd></div>
+    </dl>
+  </header>
+
+  <aside id="panel" aria-label="Controls">
+    <section>
+      <h2>Find a place <button id="about-btn" class="ghost tiny" aria-label="About the data and developer"><span aria-hidden="true">ⓘ</span> data</button></h2>
+      <input id="search" list="places" placeholder="city or country…" autocomplete="off" aria-label="Search for a city or country" />
+    </section>
+    <datalist id="places"></datalist>
+
+    <section>
+      <h2>Data source <span class="val">USGS</span></h2>
+      <select id="source" aria-label="Earthquake data source">
+        <option value="month">Past 30 days · M4.5+</option>
+        <option value="feedall">Past 30 days · all magnitudes</option>
+        <option value="2y">M4.5+ · last 2 years</option>
+        <option value="5y" selected>M5.0+ · last 5 years</option>
+        <option value="since2000">M4.5+ · since 2000 (large)</option>
+      </select>
+      <button id="load" class="ghost">Load</button>
+    </section>
+
+    <section>
+      <h2>Time-lapse <span id="date-big" class="val"></span></h2>
+      <div class="row">
+        <button id="play" class="ghost">▶ play</button>
+        <select id="speed" title="playback speed" aria-label="Playback speed">
+          <option value="0.04">slow</option>
+          <option value="0.09" selected>medium</option>
+          <option value="0.2">fast</option>
+        </select>
+      </div>
+      <input id="time" type="range" min="0" max="1" step="0.001" value="1" aria-label="Time-lapse position" />
+    </section>
+
+    <section>
+      <h2>Magnitude ≥ <span id="minmag-val" class="val">4.5</span></h2>
+      <input id="minmag" type="range" min="1" max="7.5" step="0.1" value="4.5" aria-label="Minimum magnitude filter" />
+    </section>
+
+    <section>
+      <h2>Spike size</h2>
+      <input id="size" type="range" min="1.5" max="10" step="0.5" value="4" aria-label="Spike size" />
+    </section>
+
+    <section>
+      <h2>Depth (km)</h2>
+      <div class="legend-bar" role="img" aria-label="Depth colour scale: shallow orange to deep blue"></div>
+      <div class="legend-labels"><span>0</span><span>300</span><span>700</span></div>
+      <div class="legend-note">taller spike = larger magnitude · colour = depth</div>
+    </section>
+
+    <section id="pick" class="hidden">
+      <div class="pick-place" id="pick-place"></div>
+      <div class="pick-meta" id="pick-meta"></div>
+      <a class="pick-link" id="pick-link" target="_blank" rel="noopener">USGS event page ↗</a>
+    </section>
+
+    <div class="panel-credit">
+      Built by <b>Dr. Safeer Ali Mirani</b><br>
+      <a href="mailto:safeer.ali.mirani@gmail.com">safeer.ali.mirani@gmail.com</a>
+    </div>
+  </aside>
+
+  <footer id="hint"><span>drag</span> rotate · <span>scroll/pinch</span> zoom · <span>/</span> search · <span>space</span> play · <span>?</span> keys</footer>
+
+  <div id="loading" class="overlay">
+    <div class="spinner"></div>
+    <div id="loading-text">Contacting USGS…</div>
+  </div>
+
+  <div id="onboard" class="overlay hidden">
+    <div id="onboard-card">👋 <b>Drag</b> to explore the globe, <b>scroll</b> to zoom, and hit <b>▶ play</b> for the time-lapse. Search a city or country to fly there.</div>
+  </div>
+
+  <div id="shortcuts" class="overlay hidden" role="dialog" aria-label="Keyboard shortcuts">
+    <div class="about-card">
+      <button class="ghost tiny" onclick="document.getElementById('shortcuts').classList.add('hidden')">✕ close</button>
+      <h1>Keyboard shortcuts</h1>
+      <p><kbd>Space</kbd> play / pause the time-lapse</p>
+      <p><kbd>/</kbd> focus the place search</p>
+      <p><kbd>Esc</kbd> close a panel or blur search</p>
+      <p><kbd>?</kbd> toggle this panel</p>
+    </div>
+  </div>
+
+  <div id="about" class="overlay hidden" role="dialog" aria-modal="true" aria-label="About the data and developer">
+    <div class="about-card">
+      <button id="about-close" class="ghost tiny"><span aria-hidden="true">✕</span> close</button>
+      <h1>How this data is collected</h1>
+      <p><b>Earthquakes</b> — from the <b>USGS Earthquake Hazards Program</b>. A global network of seismometers records ground motion; USGS locates each quake by comparing when seismic waves reach many stations, and computes its magnitude from the wave amplitudes. This app pulls that catalog <b>live</b> from the USGS FDSN Event API — no data is stored or altered here.</p>
+      <p><b>Basemap</b> — coastlines, country borders and city locations are from <b>Natural Earth</b>, the public-domain dataset used by professional cartographers.</p>
+      <p><b>This view</b> — every magnitude-5.0+ earthquake worldwide over the last 5 years (~9,000 events), unfiltered. Change the range with the Data source menu. The full USGS catalog is ~2.9 million events since 1900 — too large to stream live in a browser, so a multi-year window is shown.</p>
+      <p class="muted">Data sources: earthquake.usgs.gov/fdsnws · naturalearthdata.com (public domain)</p>
+      <p><b>How it's built</b> — earthquake globes are a familiar genre, and most are built on a library such as Three.js, globe.gl or Cesium. This one is written from scratch against the raw <b>WebGPU</b> API — hand-written WGSL shaders, camera and matrix math, instanced rendering — with no map SDK, no framework and no build step. The concept is familiar; the implementation is from scratch.</p>
+      <div class="about-credit">
+        <div>Designed &amp; built by <b>Dr. Safeer Ali Mirani</b> — GPU / XR / real-time visualisation engineer (PhD). Hand-written WebGPU, no map SDK, no dependencies.</div>
+        <div><a href="mailto:safeer.ali.mirani@gmail.com">safeer.ali.mirani@gmail.com</a> · <a href="https://safeeralimirani.netlify.app" target="_blank" rel="noopener">Portfolio</a> · <a href="https://github.com/SafeerAliMirani" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/in/safeeralimirani" target="_blank" rel="noopener">LinkedIn</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="nogpu" class="overlay hidden">
+    <div class="nogpu-card">
+      <h1>WebGPU required</h1>
+      <p>Seismic Earth renders the globe with WebGPU. Your browser didn't expose it.</p>
+      <p class="muted">Try Chrome or Edge 113+, or Safari 18+.</p>
+    </div>
+  </div>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>

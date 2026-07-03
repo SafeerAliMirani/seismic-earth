@@ -1,0 +1,12 @@
+# Netlify config for Seismic Earth — a static site, no build step.
+# The site lives in the web/ folder (index.html + js/ + css/).
+
+[build]
+  publish = "web"
+
+# Sensible security headers (optional but professional).
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

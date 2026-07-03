@@ -1,0 +1,13 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Python dev-server cache
+__pycache__/
+*.pyc
+
+# Local env / secrets (none needed, but keep them out just in case)
+.env
