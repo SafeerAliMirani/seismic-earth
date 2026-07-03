@@ -3,6 +3,8 @@
 **Dr. Safeer Ali Mirani** · GPU / XR / real-time visualisation engineer (PhD)
 [safeer.ali.mirani@gmail.com](mailto:safeer.ali.mirani@gmail.com) · [Portfolio](https://safeeralimirani.netlify.app) · [GitHub](https://github.com/SafeerAliMirani) · [LinkedIn](https://www.linkedin.com/in/safeeralimirani)
 
+**Live demo:** [seismic-earth.netlify.app](https://seismic-earth.netlify.app) · **Source:** [github.com/SafeerAliMirani/seismic-earth](https://github.com/SafeerAliMirani/seismic-earth)
+
 Reusable copy for a CV, portfolio site, or LinkedIn. All claims are accurate and verifiable.
 
 ## Résumé bullets
@@ -30,4 +32,4 @@ Seismic Earth is a hand-built WebGPU globe that visualises real, live earthquake
 
 ## One-line version
 
-*Real-time WebGPU globe of live USGS earthquakes — hand-written shaders, camera and data pipeline, zero dependencies. — Dr. Safeer Ali Mirani*
+*Real-time WebGPU globe of live USGS earthquakes — hand-written shaders, camera and data pipeline, zero dependencies. Live at seismic-earth.netlify.app. — Dr. Safeer Ali Mirani*

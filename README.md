@@ -4,14 +4,16 @@
 
 _By **Dr. Safeer Ali Mirani** — GPU / XR / real-time visualisation engineer (PhD)._
 
+**Live demo → [seismic-earth.netlify.app](https://seismic-earth.netlify.app)** — best viewed in a WebGPU browser (Chrome/Edge 113+ or desktop Safari 18+).
+
 Seismic Earth renders a fully interactive 3D Earth in the browser and replays every magnitude-5.0+ earthquake of the last five years (~9,000 events) as a time-lapse of glowing spikes. It is not a Google Maps or Mapbox embed: the globe, camera, matrix math and WGSL shaders are written from scratch against the raw WebGPU API, and every earthquake is fetched live from the public USGS catalog the moment the page loads. No map SDK, no npm packages, no build step, no synthetic data.
 
 ## Features
 
-- **Hand-built WebGPU globe** — Lambert-lit sphere with a lat/long graticule, a real depth buffer (the far side is occluded) and 4× MSAA.
+- **Hand-built WebGPU globe** — Lambert-lit sphere with **green land and blue ocean** filled from a Natural Earth land mask sampled in the shader, a lat/long graticule, a real depth buffer (the far side is occluded) and 4× MSAA.
 - **Real earthquakes, fetched live** — client-side from the USGS FDSN Event API. Default view: every M5.0+ quake worldwide over the last 5 years (~9,000 events). Other sources: past 30 days (M4.5+ or all magnitudes), M4.5+ over the last 2 years, and M4.5+ since 2000.
 - **Quakes as spikes** — each event rises from the surface: height scales with magnitude, colour encodes hypocentre depth (shallow red through yellow and green to deep blue, 0–700 km), and each quake pulses taller and brighter at the moment it strikes during playback before fading into a dim history layer.
-- **Real basemap** — Natural Earth coastlines and country borders drawn as 3D polylines, plus 243 major cities labelled with dots coloured by country.
+- **Real basemap** — Natural Earth coastlines and country borders drawn as 3D polylines, plus up to ~1,000 major cities with dots coloured by country — labelled biggest-first, revealing more as you zoom in.
 - **Time-lapse** — play / pause, a scrubber and three speeds, with a live date readout.
 - **Google-Maps-style controls** — arcball grab-drag with momentum, scroll-wheel and pinch zoom, full touch support.
 - **Place search** — type a city or country and the camera flies there along the shortest arc.
