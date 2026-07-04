@@ -1,4 +1,4 @@
-# Netlify config for Seismic Earth — a static site, no build step.
+# Netlify config for Seismic Earth: a static site, no build step.
 # The site lives in the web/ folder (index.html + js/ + css/).
 
 [build]

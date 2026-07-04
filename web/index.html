@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Seismic Earth — live global earthquakes (USGS · WebGPU)</title>
+  <title>Seismic Earth: live global earthquakes (USGS · WebGPU)</title>
   <meta name="description" content="A real-time 3D globe of real earthquakes streamed live from the USGS, rendered with WebGPU. Built by Dr. Safeer Ali Mirani." />
   <meta name="author" content="Dr. Safeer Ali Mirani" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%2305070e' stroke='%23e0b872' stroke-width='1.5'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23ff7a4d'/%3E%3Ccircle cx='16' cy='16' r='7.5' fill='none' stroke='%23ff7a4d' stroke-width='1' opacity='0.55'/%3E%3Ccircle cx='16' cy='16' r='11.5' fill='none' stroke='%23ff7a4d' stroke-width='0.75' opacity='0.3'/%3E%3C/svg%3E" />
@@ -115,13 +115,13 @@
     <div class="about-card">
       <button id="about-close" class="ghost tiny"><span aria-hidden="true">✕</span> close</button>
       <h1>How this data is collected</h1>
-      <p><b>Earthquakes</b> — from the <b>USGS Earthquake Hazards Program</b>. A global network of seismometers records ground motion; USGS locates each quake by comparing when seismic waves reach many stations, and computes its magnitude from the wave amplitudes. This app pulls that catalog <b>live</b> from the USGS FDSN Event API — no data is stored or altered here.</p>
-      <p><b>Basemap</b> — coastlines, country borders and city locations are from <b>Natural Earth</b>, the public-domain dataset used by professional cartographers.</p>
-      <p><b>This view</b> — every magnitude-5.0+ earthquake worldwide over the last 5 years (~9,000 events), unfiltered. Change the range with the Data source menu. The full USGS catalog is ~2.9 million events since 1900 — too large to stream live in a browser, so a multi-year window is shown.</p>
+      <p><b>Earthquakes</b>: from the <b>USGS Earthquake Hazards Program</b>. A global network of seismometers records ground motion; USGS locates each quake by comparing when seismic waves reach many stations, and computes its magnitude from the wave amplitudes. This app pulls that catalog <b>live</b> from the USGS FDSN Event API, no data is stored or altered here.</p>
+      <p><b>Basemap</b>: coastlines, country borders and city locations are from <b>Natural Earth</b>, the public-domain dataset used by professional cartographers.</p>
+      <p><b>This view</b>: every magnitude-5.0+ earthquake worldwide over the last 5 years (~9,000 events), unfiltered. Change the range with the Data source menu. The full USGS catalog is ~2.9 million events since 1900, too large to stream live in a browser, so a multi-year window is shown.</p>
       <p class="muted">Data sources: earthquake.usgs.gov/fdsnws · naturalearthdata.com (public domain)</p>
-      <p><b>How it's built</b> — earthquake globes are a familiar genre, and most are built on a library such as Three.js, globe.gl or Cesium. This one is written from scratch against the raw <b>WebGPU</b> API — hand-written WGSL shaders, camera and matrix math, instanced rendering — with no map SDK, no framework and no build step. The concept is familiar; the implementation is from scratch.</p>
+      <p><b>How it's built</b>: earthquake globes are a familiar genre, and most are built on a library such as Three.js, globe.gl or Cesium. This one is written from scratch against the raw <b>WebGPU</b> API (hand-written WGSL shaders, camera and matrix math, instanced rendering), with no map SDK, no framework and no build step. The concept is familiar; the implementation is from scratch.</p>
       <div class="about-credit">
-        <div>Designed &amp; built by <b>Dr. Safeer Ali Mirani</b> — GPU / XR / real-time visualisation engineer (PhD). Hand-written WebGPU, no map SDK, no dependencies.</div>
+        <div>Designed &amp; built by <b>Dr. Safeer Ali Mirani</b>, GPU / XR / real-time visualisation engineer (PhD). Hand-written WebGPU, no map SDK, no dependencies.</div>
         <div><a href="mailto:safeer.ali.mirani@gmail.com">safeer.ali.mirani@gmail.com</a> · <a href="https://safeeralimirani.netlify.app" target="_blank" rel="noopener">Portfolio</a> · <a href="https://github.com/SafeerAliMirani" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/in/safeeralimirani" target="_blank" rel="noopener">LinkedIn</a></div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-/* Seismic Earth — deep-space navy with warm seismic accents.
+/* Seismic Earth: deep-space navy with warm seismic accents.
    Built by Dr. Safeer Ali Mirani · safeer.ali.mirani@gmail.com */
 :root {
   --ink: #05070e;
@@ -91,7 +91,7 @@ button.ghost.tiny { padding: 2px 8px; font-size: 10px; }
 .panel-credit a { color: var(--gold-2); text-decoration: none; }
 .panel-credit a:hover { text-decoration: underline; }
 
-/* Focus — keyboard-only, matches the gold accent */
+/* Focus: keyboard-only, matches the gold accent */
 select:focus, #search:focus { outline: none; border-color: var(--gold-2); }
 :focus-visible { outline: 2px solid var(--gold-2); outline-offset: 2px; border-radius: 6px; }
 button.ghost:focus-visible { outline-offset: 3px; }

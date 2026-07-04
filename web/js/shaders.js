@@ -12,7 +12,7 @@ struct Uniforms {
 @group(0) @binding(0) var<uniform> U : Uniforms;
 `;
 
-// --- Globe surface: land/ocean fill from a mask texture, lambert shading ---- //
+// Globe surface: land/ocean fill from a mask texture, lambert shading.
 export const GLOBE_SHADER = UNIFORMS + `
 @group(0) @binding(1) var landSamp : sampler;
 @group(0) @binding(2) var landTex  : texture_2d<f32>;
@@ -49,7 +49,7 @@ struct VO { @builtin(position) pos : vec4<f32>, @location(0) n : vec3<f32> };
 }
 `;
 
-// --- Graticule: faint blue lat/long lines --------------------------------- //
+// Graticule: faint blue lat/long lines.
 export const LINE_SHADER = UNIFORMS + `
 @vertex fn vs(@location(0) p : vec3<f32>) -> @builtin(position) vec4<f32> {
   return U.viewProj * vec4<f32>(p, 1.0);
@@ -59,7 +59,7 @@ export const LINE_SHADER = UNIFORMS + `
 }
 `;
 
-// --- Coastlines / borders: brighter warm land outlines -------------------- //
+// Coastlines / borders: brighter warm land outlines.
 export const COAST_SHADER = UNIFORMS + `
 @vertex fn vs(@location(0) p : vec3<f32>) -> @builtin(position) vec4<f32> {
   return U.viewProj * vec4<f32>(p, 1.0);
@@ -69,9 +69,9 @@ export const COAST_SHADER = UNIFORMS + `
 }
 `;
 
-// --- Earthquake SPIKES: a screen-space quad from the surface (base) out to a
-//     tip whose height scales with magnitude; recent quakes pulse taller and
-//     brighter. One instanced draw of 6 verts per event. ------------------- //
+// Earthquake spikes: a screen-space quad from the surface (base) out to a
+// tip whose height scales with magnitude, recent quakes pulse taller and
+// brighter. One instanced draw of 6 verts per event.
 export const POINT_SHADER = UNIFORMS + `
 @group(0) @binding(1) var<storage, read> data : array<vec4<f32>>; // 2 vec4/event
 

@@ -83,7 +83,7 @@ async function load(key) {
   try {
     d = await fetchSource(key, (n, pct) => { if (seq === loadSeq) ui.loading(`Loading real events from USGS… ${n.toLocaleString("en-US")}${pct != null ? ` (${pct}%)` : ""}`); });
   } catch (e) {
-    if (seq === loadSeq) { console.error("USGS load failed:", e); ui.loading("USGS request failed — check your connection, then press Load."); }
+    if (seq === loadSeq) { console.error("USGS load failed:", e); ui.loading("USGS request failed, check your connection, then press Load."); }
     return;
   }
   if (seq !== loadSeq) return;          // superseded by a newer load
@@ -152,7 +152,7 @@ function loop() {
   let frames = 0, acc = 0, last = performance.now();
   const tick = (now) => {
     requestAnimationFrame(tick);
-    if (renderer.lost) { showNoGPU("GPU device lost — please reload."); return; }
+    if (renderer.lost) { showNoGPU("GPU device lost, please reload."); return; }
     if (document.hidden) { last = now; return; }           // skip work in background tabs
     const dt = Math.min(0.1, (now - last) / 1000); last = now; acc += dt; frames++;
     if (acc >= 0.5) { ui.setFps(Math.round(frames / acc)); frames = 0; acc = 0; }
