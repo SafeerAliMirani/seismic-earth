@@ -2,7 +2,7 @@
 <p align="center"><b>A hand-built WebGPU globe streaming ~9,000 real earthquakes live from the USGS.</b></p>
 
 <p align="center">
-  <a href="https://seismic-earth.netlify.app"><img src="https://img.shields.io/badge/Live_Demo-seismic--earth.netlify.app-2ea44f?style=for-the-badge&logo=netlify&logoColor=white" alt="Live Demo" /></a>
+  <a href="https://seismic-earth.pages.dev"><img src="https://img.shields.io/badge/Live_Demo-seismic--earth.pages.dev-2ea44f?style=for-the-badge&logo=cloudflare&logoColor=white" alt="Live Demo" /></a>
 </p>
 
 <p align="center">
@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <b>Live demo:</b> <a href="https://seismic-earth.netlify.app">seismic-earth.netlify.app</a> (Chrome/Edge 113+ or desktop Safari 18+)
+  <b>Live demo:</b> <a href="https://seismic-earth.pages.dev">seismic-earth.pages.dev</a> (Chrome/Edge 113+ or desktop Safari 18+)
 </p>
 
 ---
@@ -124,4 +124,4 @@ Nothing in this app is synthetic, bundled, or precomputed. At page load the brow
 ---
 
 Built by **Dr. Safeer Ali Mirani**, GPU / XR / real-time visualisation engineer (PhD).
-[safeer.ali.mirani@gmail.com](mailto:safeer.ali.mirani@gmail.com) · [Portfolio](https://safeeralimirani.netlify.app) · [GitHub](https://github.com/SafeerAliMirani) · [LinkedIn](https://www.linkedin.com/in/safeeralimirani)
+[safeer.ali.mirani@gmail.com](mailto:safeer.ali.mirani@gmail.com) · [Portfolio](https://safeeralimirani.pages.dev) · [GitHub](https://github.com/SafeerAliMirani) · [LinkedIn](https://www.linkedin.com/in/safeeralimirani)
