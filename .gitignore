@@ -11,3 +11,5 @@ __pycache__/
 
 # Local env / secrets (none needed, but keep them out just in case)
 .env
+
+.wrangler/

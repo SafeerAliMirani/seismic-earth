@@ -140,8 +140,11 @@
 (function(){
   var E='https://safeer-analytics.safeer-ali-mirani.workers.dev/collect';
   function send(t,l){try{var b=JSON.stringify({type:t,label:l||null,path:location.pathname,referrer:document.referrer||null});
-    if(navigator.sendBeacon)navigator.sendBeacon(E,new Blob([b],{type:'application/json'}));
-    else fetch(E,{method:'POST',body:b,headers:{'Content-Type':'application/json'},keepalive:true});}catch(_){ }}
+    /* text/plain is REQUIRED: application/json is not CORS-safelisted, so the browser
+       needs a preflight, drops the beacon SILENTLY, and sendBeacon still returns true.
+       The Worker parses the body as JSON regardless of the declared type. */
+    if(navigator.sendBeacon)navigator.sendBeacon(E,new Blob([b],{type:'text/plain;charset=UTF-8'}));
+    else fetch(E,{method:'POST',body:b,headers:{'Content-Type':'text/plain;charset=UTF-8'},keepalive:true});}catch(_){ }}
   send('pageview');
   document.addEventListener('click',function(e){
     var a=e.target.closest?e.target.closest('a'):null; if(!a)return;
@@ -152,5 +155,43 @@
   },true);
 })();
 </script>
+<!-- tour: steps for this page, then the shared engine -->
+<script>
+window.TOUR_STEPS = [
+  {
+    "sel": "#hud",
+    "title": "What you are looking at",
+    "body": "Every real earthquake in the feed, drawn as a spike out of the globe at the point it happened. The height is the magnitude. The count and the date are live."
+  },
+  {
+    "sel": "#search",
+    "title": "Find a place",
+    "body": "Type a city or a country and the globe flies there. Useful if you want to know what has been happening under somewhere you know."
+  },
+  {
+    "sel": "#source",
+    "title": "Where the data comes from",
+    "body": "The live USGS feed, straight from their servers. Pick a window and press Load. Nothing here is simulated."
+  },
+  {
+    "sel": "#play",
+    "title": "Watch it happen in order",
+    "body": "Play the window as a time lapse and the spikes appear in the order the earthquakes actually occurred."
+  },
+  {
+    "sel": "#minmag",
+    "title": "Filter the small ones out",
+    "body": "Most earthquakes are tiny. Drag this up to leave only the ones that would have been felt."
+  },
+  {
+    "sel": "#about-btn",
+    "title": "Where it all comes from",
+    "body": "The data source, the licence, and who built this."
+  }
+];
+window.TOUR_OPTIONS = { readySel: "#hud" };
+</script>
+<script src="tour.js"></script>
+<!-- /tour -->
 </body>
 </html>
